@@ -1,0 +1,185 @@
+ORG 0100H
+
+JMP başla
+
+yeni_satır               EQU 0AH   ; \n
+geri_dönüş               EQU 0DH   ; \r
+geri_al                  EQU 08H   ; \b
+
+
+; 
+; Sabit bir şekilde kodlanmış metin:
+;
+sabit_metin              DB      'Selam! Bu şifrelenmiş bir mesajdır', geri_dönüş, yeni_satır, '$'
+
+
+girdi_metin              DB      259 dup ('$')               
+                                                  
+ 
+;                                                 
+; Kullanıcıya gösterilecek mesajlar:
+;
+mesaj_hoşgeldin           DB      yeni_satır, 'Monoalfabetik şifreleme sistemine hoş geldiniz! ', geri_dönüş, yeni_satır
+                          DB      'Lütfen nasıl işlem yapılacağını seçin:', geri_dönüş, yeni_satır
+                          DB      '1- Girdi metni (maksimum: 256 karakter)', geri_dönüş, yeni_satır
+                          DB      '2- Sabit metni kullan', geri_dönüş, yeni_satır, '$'
+
+mesaj_sabit_kullanım     DB      '===============================', geri_dönüş, yeni_satır
+                          DB      'SABİT METİN KULLANIYORSUNUZ' , geri_dönüş, yeni_satır
+                          DB      '===============================', geri_dönüş, yeni_satır, '$'
+                       
+mesaj_girdi_kullanım     DB      '===============================', geri_dönüş, yeni_satır
+                          DB      'Aşağıya metninizi girin' , geri_dönüş, yeni_satır
+                          DB      '===============================', geri_dönüş, yeni_satır, '$'
+                       
+mesaj_tekrar_deneyin     DB      geri_dönüş, yeni_satır, 'Bir denemeye daha ne dersiniz? (e/h)', geri_dönüş, yeni_satır, '$'
+
+mesaj_tuşa_bas           DB      'Çıkış yapmak için herhangi bir tuşa basın...$'                      
+
+mesaj_özgün_metin        DB      geri_dönüş, yeni_satır, 'Özgün metniniz: $'                       
+mesaj_şifreli_metin      DB      geri_dönüş, 'Şifrelenmiş mesaj: $'
+mesaj_çözülmüş_metin     DB      geri_dönüş, 'Çözülmüş mesaj: $'
+mesaj_şifreleme          DB      'Şifreleniyor...$'
+mesaj_çözme              DB      'Çözülüyor...$'
+                       
+
+
+; Referans olarak --------------------->  'abcdefghijklmnopqrstuvwxyz'
+şifreleme_tablosu_küçük DB      97 dup (' '), 'qwertyuiopasdfghjklzxcvbnm'  
+çözme_tablosu_küçük     DB      97 dup (' '), 'kxvmcnophqrszyijadlegwbuft'  
+; Tablo başlamadan önce 97 (61H) boşluk bırakıyoruz
+; çünkü 'a' karakterinin ASCII değeri 61H
+                                   
+şifreleme_tablosu_büyük DB      65 dup (' '), 'QWERTYUIOPASDFGHJKLZXCVBNM'  
+çözme_tablosu_büyük     DB      65 dup (' '), 'KXVMCNOPHQRSZYIJADLEGWBUFT'
+; Tablo başlamadan önce 65 (41H) boşluk bırakıyoruz
+; çünkü 'A' karakterinin ASCII değeri 41H
+
+
+başla:                 
+  
+                       LEA     DX, mesaj_hoşgeldin
+                       MOV     AH, 09
+                       INT     21H                    
+                       MOV     AH, 0
+                       INT     16H
+                       CMP     AL, '2'        
+                       JE      sabit_kullan
+                       CMP     AL, '1'        
+                       JNE     başla
+                       CALL    girdi_al
+                       JMP     işlem_başlat
+                       
+sabit_kullan:          LEA     DX, mesaj_sabit_kullanım
+                       MOV     AH, 09
+                       INT     21H
+                       LEA     SI, sabit_metin 
+                       
+                                                                                        
+işlem_başlat:
+
+; Özgün metni göster
+                       LEA     DX, mesaj_özgün_metin
+                       MOV     AH, 09         
+                       INT     21H             
+                       LEA     DX, SI
+                       MOV     AH, 09          
+                       INT     21H             
+                       
+                                                                                                                      
+; Şifreleme:             
+                       LEA     DX, mesaj_şifreleme   ; Mesajı göster
+                       MOV     AH, 09
+                       INT     21H
+                       MOV     AH, 1           ; AH değerini ayarla çünkü encrypt_decrypt işlemi buna bağlı
+                       CALL    encrypt_decrypt ; AH = 1 monoalfabetik şifreleme demektir, 0 monoalfabetik çözme demektir, başka değerler işlem yapmaz
+
+; Sonucu ekranda göster:
+                       LEA     DX, mesaj_şifreli_metin
+                       MOV     AH, 09          ; AH değerini ayarla çünkü int 21H işlemi buna bağlı
+                       INT     21H             ; AH = 09 iken int 21H DS:DX'deki metni çıkartır             
+                       LEA     DX, SI
+                       MOV     AH, 09          
+                       INT     21H             
+
+; Çözme:
+                       LEA     DX, mesaj_çözme    ; Mesajı göster
+                       MOV     AH, 09
+                       INT     21H
+                       MOV     AH, 0           ; AH = 0 monoalfabetik çözme demektir
+                       CALL    encrypt_decrypt 
+                    
+; Sonucu ekranda göster:
+                       LEA     DX, mesaj_çözülmüş_metin
+                       MOV     AH, 09          ; AH değerini ayarla çünkü int 21H işlemi buna bağlı
+                       INT     21H             ; AH = 09 iken int 21H DS:DX'deki metni çıkartır             
+                       LEA     DX, SI
+                       MOV     AH, 09          
+                       INT     21H
+
+; Tekrar dene mesajını göster
+tekrar_dene:           LEA     DX, mesaj_tekrar_deneyin    
+                       MOV     AH, 09
+                       INT     21H
+                       MOV     AH, 0
+                       INT     16H
+                       CMP     AL, 'e'
+                       JE      başla
+                       CMP     AL, 'h'
+                       JNE     tekrar_dene
+                       
+                    
+; Herhangi bir tuşa basmayı bekle...
+                       LEA     DX, mesaj_tuşa_bas
+                       MOV     AH, 09
+                       INT     21H
+                       MOV     AH, 0           ; AH değerini ayarla çünkü int 16H işlemi buna bağlı
+                       INT     16H             ; AH = 00 iken int 16H klavyeden tuş vuruşunu bekler (yansıtmaz)       
+                    
+                       RET   
+   
+   
+;   si - şifrelenecek metnin adresi
+encrypt_decrypt        PROC    NEAR
+                       PUSH    SI
+sonraki_karakter:      MOV     AL, [SI]
+                	   CMP     AL, '$'         ; Metnin sonu mu?
+                	   JE      metin_sonu
+                	   	 
+                	   CMP     AL, ' '         ;<--- Boşluk kontrolünün başlangıcı
+        	           JNE     devam_et        ; Bu bir ödevdi ve gerekliliklerden biri boşlukları sonuçtan çıkarmaktı, bu yüzden bu 4 satırı ve omit_space alt programını boşlukları kaldırmak istemiyorsanız kaldırabilirsiniz.       	           
+                       CALL    boşluk_atla     
+                       JMP     sonraki_karakter       ;<--- Boşluk kontrolünün sonu
+                       	
+devam_et:              CALL    karakter_şifrele_çöz
+    	               INC     SI	
+            	       JMP     sonraki_karakter
+metin_sonu:            POP     SI
+                       RET            
+encrypt_decrypt        ENDP
+
+
+      
+;
+; Boşlukları metnin sonuna ( '$' sonrası) göndermek için alt program
+; Bu alt programı gerek duymuyorsanız silebilirsiniz
+;
+boşluk_atla            PROC    NEAR    
+                       PUSH    SI              ; Boşluğu '$' sonrası göndermemin nedeni
+	                                           ; art arda gelen birkaç boşluğu sonsuz döngüye girmeden
+boşluk_atla_döngü:     MOV     AL, [SI+1]      ; bu karakterle değiş tokuş yaparak işlemektir 
+                       MOV     [SI+1], ' '     ; 
+                       MOV     [SI], AL
+                       INC     SI
+                       CMP     [SI-1], '$'                      
+                       JNE     boşluk_atla_döngü
+                       POP     SI  
+                       RET
+boşluk_atla            ENDP    
+                   
+                   
+                   
+; Karakteri şifreleme/çözme tablosu ile (büyük/küçük harf)
+karakter_şifrele_çöz   PROC    NEAR
+                       PUSH    BX    
+                       CMP     AL, 'a'       

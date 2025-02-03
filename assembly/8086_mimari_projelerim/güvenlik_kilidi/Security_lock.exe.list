@@ -1,0 +1,191 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Security_lock.exe -- emu8086 assembler version: 4.08  
+ 
+[ 18.05.2024  --  18:57:16 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       
+[   2]        :                                       ; You may customize this and other start-up templates;
+[   3]        :                                       ; The location of this template is c:\emu8086\inc\0_com_template.txt
+[   4]        :                                       include emu8086.inc
+[   5]        :                                       .MODEL SMALL
+[   6]        :                                       .DATA
+[   7]        :                                       ;I    DB 0d
+[   8]        :                                       SIZE EQU 10
+[   9]    0000: 5F 5F 5F 5F 5F 5F 5F 5F 5F 5F 5F 5F   HEAD DB '________________Security lock________________','$'
+                5F 5F 5F 5F 53 65 63 75 72 69 74 79 
+                20 6C 6F 63 6B 5F 5F 5F 5F 5F 5F 5F 
+                5F 5F 5F 5F 5F 5F 5F 5F 5F 24       
+[  10]    002E: 0D 0A 45 6E 74 65 72 20 79 6F 75 72   MSG1 DB 13, 10, 'Enter your ID:$'
+                20 49 44 3A 24                      
+[  11]    003F: 0D 0A 45 6E 74 65 72 20 79 6F 75 72   MSG2 DB 13, 10, 'Enter your Password:$'
+                20 50 61 73 73 77 6F 72 64 3A 24    
+[  12]    0056: 0D 0A 45 52 52 4F 52 20 49 44 20 6E   MSG3 DB 13, 10, 'ERROR ID not Found!$'
+                6F 74 20 46 6F 75 6E 64 21 24       
+[  13]    006C: 0D 0A 57 72 6F 6E 67 20 50 61 73 73   MSG4 DB 13, 10, 'Wrong Password! Access denied$'
+                77 6F 72 64 21 20 41 63 63 65 73 73 
+                20 64 65 6E 69 65 64 24             
+[  14]    008C: 0D 0A 43 6F 72 72 65 63 74 21 20 57   MSG5 DB 13, 10, 'Correct! Welocome to the Safe$'
+                65 6C 6F 63 6F 6D 65 20 74 6F 20 74 
+                68 65 20 53 61 66 65 24             
+[  15]    00AC: 0D 0A 54 6F 6F 20 4C 6F 6E 67 20 70   MSG6 DB 13, 10, 'Too Long password!$'
+                61 73 73 77 6F 72 64 21 24          
+[  16]    00C1: 00 00 00 00                           TEMP_ID DW 1 DUP(?),0
+[  17]    00C5: 00                                    TEMP_Pass DB 1 DUP(?)
+[  18]    00C6:                                       IDSize = $-TEMP_ID
+[  19]    00C6:                                       PassSize = $-Temp_Pass
+[  20]    00C6: 41 31 35 30 42 32 35 35 43 45 32 30   ID  DW        'A150', 'B255', 'CE20', 'BB71', 'D111', 'E500', 'F432', 'EC12', '5321', '9876'
+                42 42 37 31 44 31 31 31 45 35 30 30 
+                46 34 33 32 45 43 31 32 35 33 32 31 
+                39 38 37 36                         
+[  21]    00EE: 01 02 03 04 07 0A 0B 0D 0C 0E         Password DB   1,      2,      3,      4,       7,     10,     11,     13,     12,      14
+[  22]        :                                       
+[  23]        :                                       .CODE
+[  24]    0100:                                       MAIN        PROC
+[  25]    0100: B8 00 00                              MOV AX,@DATA   ;In
+[  26]    0103: 8E D8                                 MOV DS,AX
+[  27]    0105: B8 00 00                              MOV AX,0000H
+[  28]        :                                       
+[  29]        :                                       
+[  30]        :                                       Title:      LEA DX,HEAD
+[  31]    0108: B4 09                                 MOV AH,09H
+[  32]    010A: CD 21                                 INT 21H
+[  33]        :                                       
+[  34]    010C: BA 2E 00                              ID_PROMPT:  LEA DX,MSG1
+[  35]    010F: B4 09                                 MOV AH,09H
+[  36]    0111: CD 21                                 INT 21H
+[  37]        :                                       
+[  38]        :                                       
+[  39]    0113: BB 00 00                              ID_INPUT:   MOV BX,0
+[  40]    0116: BA 00 00                              MOV DX,0
+[  41]    0119: BF C1 00                              LEA DI,TEMP_ID
+[  42]    011C: BA 05 00                              MOV DX,IDSize
+[  43]    011F: E8 21 01                              CALL get_string
+[  44]        :                                       
+[  45]        :                                       
+[  46]    0122: B3 00                                 CheckID:    MOV BL,0
+[  47]    0124: BE 00 00                              MOV SI,0
+[  48]        :                                       
+[  49]    0127: 8B 84 C6 00                           AGAIN:      MOV AX,ID[SI]
+[  50]    012B: 8B 16 C1 00                           MOV DX,TEMP_ID
+[  51]    012F: 3B D0                                 CMP DX,AX
+[  52]    0131: 74 13                                 JE  PASS_PROMPT
+[  53]    0133: FE C3                                 INC BL
+[  54]    0135: 83 C6 04                              ADD SI,4
+[  55]    0138: 80 FB 0A                              CMP BL,SIZE
+[  56]    013B: 72 EA                                 JB  AGAIN
+[  57]        :                                       
+[  58]    013D: BA 56 00                              ERRORMSG:   LEA DX,MSG3
+[  59]    0140: B4 09                                 MOV AH,09H
+[  60]    0142: CD 21                                 INT 21H
+[  61]    0144: EB C6                                 JMP ID_PROMPT
+[  62]        :                                       
+[  63]        :                                       
+[  64]    0146: BA 3F 00                              PASS_PROMPT:LEA DX,MSG2
+[  65]    0149: B4 09                                 MOV AH,09H
+[  66]    014B: CD 21                                 INT 21H
+[  67]        :                                       
+[  68]    014D: E8 2E 00                              Pass_INPUT: CALL   scan_num
+[  69]    0150: 80 F9 0F                              CMP    CL,0FH
+[  70]    0153: 73 1D                                 JAE    TooLong
+[  71]    0155: B7 00                                 MOV    BH,00H
+[  72]    0157: 8A 97 EE 00                           MOV    DL,Password[BX]
+[  73]    015B: 3A CA                                 CMP    CL,DL
+[  74]    015D: 74 09                                 JE     CORRECT
+[  75]        :                                       
+[  76]        :                                       
+[  77]    015F: BA 6C 00                              INCORRECT:  LEA DX,MSG4
+[  78]    0162: B4 09                                 MOV AH,09H
+[  79]    0164: CD 21                                 INT 21H
+[  80]    0166: EB A4                                 JMP ID_PROMPT
+[  81]        :                                       
+[  82]    0168: BA 8C 00                              CORRECT:    LEA DX,MSG5
+[  83]    016B: B4 09                                 MOV AH,09H
+[  84]    016D: CD 21                                 INT 21H
+[  85]    016F: E9 1E 01                              JMP Terminate
+[  86]        :                                       
+[  87]    0172: BA AC 00                              TooLong:    LEA DX,MSG6
+[  88]    0175: B4 09                                 MOV AH,09H
+[  89]    0177: CD 21                                 INT 21H
+[  90]    0179: EB CB                                 JMP PASS_PROMPT
+[  91]        :                                       
+[  92]        :                                       
+[  93]    017B: E9 C3 00 52 50 56 B9 00 00 2E C6 06   DEFINE_SCAN_NUM
+                3E 01 00 B4 00 CD 16 B4 0E CD 10 3C 
+                2D 74 69 3C 0D 75 03 E9 93 00 3C 08 
+                75 1E BA 00 00 8B C1 2E F7 36 3F 01 
+                8B C8 50 B0 20 B4 0E CD 10 58 50 B0 
+                08 B4 0E CD 10 58 EB CB 3C 30 73 02 
+                EB 04 3C 39 76 1A 50 B0 08 B4 0E CD 
+                10 58 50 B0 20 B4 0E CD 10 58 50 B0 
+                08 B4 0E CD 10 58 EB A7 50 8B C1 2E 
+                F7 26 3F 01 8B C8 58 83 FA 00 75 19 
+                2C 30 B4 00 8B D1 03 C8 72 0A EB 8B 
+                2E C6 06 3E 01 01 EB 83 8B CA BA 00 
+                00 8B C1 2E F7 36 3F 01 8B C8 50 B0 
+                08 B4 0E CD 10 58 50 B0 20 B4 0E CD 
+                10 58 50 B0 08 B4 0E CD 10 58 E9 5A 
+                FF 2E 80 3E 3E 01 00 74 02 F7 D9 5E 
+                58 5A C3 00 0A 00                   
+[  94]    0241: EB 4D 50 51 57 52 B9 00 00 83 FA 01   DEFINE_GET_STRING
+                76 3C 4A B4 00 CD 16 3C 0D 74 30 3C 
+                08 75 1E E3 F2 49 4F 50 B0 08 B4 0E 
+                CD 10 58 50 B0 20 B4 0E CD 10 58 50 
+                B0 08 B4 0E CD 10 58 EB D6 3B CA 73 
+                D2 88 05 47 41 B4 0E CD 10 EB C8 C6 
+                05 00 5A 5F 59 58 C3                
+[  95]    0290:                                       Terminate:
+[  96]        :                                       END MAIN
+[  97]        :                                       
+[  98]        :                                       
+[  99]        :                                       
+[ 100]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 90      -   bytes on last page (l.byte)
+0003: 00      -   bytes on last page (h.byte)
+0004: 03      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 2F      -   check sum (l.byte)
+0013: CD      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 10      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 10      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

@@ -1,0 +1,56 @@
+< THE SYMBOL TABLE >  Security_lock.exe  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+DATA                     	00000     	-5        	SEGMENT   	(ITSELF)  
+HEAD                     	00000     	1         	VAR       	data      
+MSG1                     	0002E     	1         	VAR       	data      
+MSG2                     	0003F     	1         	VAR       	data      
+MSG3                     	00056     	1         	VAR       	data      
+MSG4                     	0006C     	1         	VAR       	data      
+MSG5                     	0008C     	1         	VAR       	data      
+MSG6                     	000AC     	1         	VAR       	data      
+TEMP_ID                  	000C1     	2         	VAR       	data      
+TEMP_PASS                	000C5     	1         	VAR       	data      
+_LOCATION_COUNTER__N1_L2D3	000C6     	-1        	LABEL     	data      
+_LOCATION_COUNTER__N2_L2D4	000C6     	-1        	LABEL     	data      
+ID                       	000C6     	2         	VAR       	data      
+PASSWORD                 	000EE     	1         	VAR       	data      
+CODE                     	00010     	-5        	SEGMENT   	(ITSELF)  
+MAIN                     	00000     	-1        	NEAR      	code      
+ID_PROMPT                	0000C     	-1        	LABEL     	code      
+ID_INPUT                 	00013     	-1        	LABEL     	code      
+CHECKID                  	00022     	-1        	LABEL     	code      
+AGAIN                    	00027     	-1        	LABEL     	code      
+ERRORMSG                 	0003D     	-1        	LABEL     	code      
+PASS_PROMPT              	00046     	-1        	LABEL     	code      
+PASS_INPUT               	0004D     	-1        	LABEL     	code      
+INCORRECT                	0005F     	-1        	LABEL     	code      
+CORRECT                  	00068     	-1        	LABEL     	code      
+TOOLONG                  	00072     	-1        	LABEL     	code      
+SCAN_NUM                 	0007E     	-1        	NEAR      	code      
+NEXT_DIGIT_LOC1TMP       	0008A     	-1        	LABEL     	code      
+NOT_CR_LOC4TMP           	0009D     	-1        	LABEL     	code      
+BACKSPACE_CHECKED_LOC2TMP	000BF     	-1        	LABEL     	code      
+OK_AE_0_LOC4TMP          	000C5     	-1        	LABEL     	code      
+REMOVE_NOT_DIGIT_LOC4TMP 	000C9     	-1        	LABEL     	code      
+OK_DIGIT_LOC4TMP         	000E3     	-1        	LABEL     	code      
+SET_MINUS_LOC1TMP        	000FF     	-1        	LABEL     	code      
+TOO_BIG2_LOC2TMP         	00107     	-1        	LABEL     	code      
+TOO_BIG_LOC2TMP          	0010C     	-1        	LABEL     	code      
+STOP_INPUT_LOC3TMP       	00130     	-1        	LABEL     	code      
+NOT_MINUS_LOC3TMP        	0013A     	-1        	LABEL     	code      
+MAKE_MINUS_LOC1TMP       	0013E     	1         	VAR       	code      
+TEN_LOC1TMP              	0013F     	2         	VAR       	code      
+SKIP_PROC_SCAN_NUM_LOC3TMP	00141     	-1        	LABEL     	code      
+GET_STRING               	00143     	-1        	NEAR      	code      
+WAIT_FOR_KEY_LOC5TMP     	00150     	-1        	LABEL     	code      
+ADD_TO_BUFFER_LOC6TMP    	0017A     	-1        	LABEL     	code      
+EXIT_LOC6TMP             	00188     	-1        	LABEL     	code      
+EMPTY_BUFFER_LOC5TMP     	0018B     	-1        	LABEL     	code      
+SKIP_PROC_GET_STRING_LOC5TMP	00190     	-1        	LABEL     	code      
+TERMINATE                	00190     	-1        	LABEL     	code      
+===================================================================================================
+[ 18.05.2024  --  18:57:16 ] 
+< END >
+ 

@@ -1,0 +1,399 @@
+MOV : DEĞİŞKEN DEĞİŞTİREN DİYEYİM ANLA
+ÖRNEK = 
+mov eax, 1 (EAXA 1 DEĞERİNİ ATADIK)
+
+
+ADD : EKLEMEK
+ÖRNEK = 
+
+mov eax, 1
+add eax, 2
+
+eax = 3
+
+
+İNC DEĞİŞKENE SABİT + EKLER 
+ÖRNEK = 
+mov eax, 3
+inc eax
+
+= eax 4
+
+DOC DEĞİŞKENE SABİT -1 CIKARIR
+
+mov eax, 3
+doc eax
+
+= eax 2
+
+
+JMP FONKSİYONLAR ARASI ATLAMA İŞLEMİ İÇİN KULLANILIR
+ÖRNEK = 
+mov eax,1
+mov ebx,2    EAXA VE EBXE DEĞER VERDİKTEN SONRA START FONKSİYONUNA ATLIYOR ORDAN DEVAM EDİYOR
+jmp start
+
+
+; YORUM SATIRI // VEYA # GİBİ 
+           ^
+           | 
+mov eax, 1 ;mov'a 1 değerini atadık
+
+
+
+
+JNZ KARŞILAŞTIRMA EYLEMİNİ YAPAR
+ÖRNEK =
+
+mov eax, 1
+mov ebx, 2
+jnz not_zero ; 0 a eşit değilse manasında
+jmp end  ; sonra atla 
+
+jmp jumptan gelsin jns ile karıştırılmamalı biri kontrol etme biri fonksiyondan fonksiyona geçme
+
+
+
+
+JB A SAYISI B SAYISINDAN KÜÇÜK İSE BİR ETİKETE ATLA FONKSİYONU
+JE A VE B SYISI EŞİT OLDUĞU ZAMAN ETİKETE ATLAMAK İÇİN KULLANILIR
+JNE A VE B SAYISI EŞİT DEĞİLSE FONKSİYONDAN ATLAR
+JG A > B VEYA B < A DURUMLAINDA ETİKETE ATLAR
+
+BUNLARI İF ELSEYE BİRAZ BENZET KURAL OLARAK DEĞİL İŞLEM OLARAK BENZET
+
+
+MUL ÇARPMA İÇİN KULLANILIR
+ÖRNEK = 
+
+mov eax, 1 
+mov ebx, 3
+mul ebx  ; ikisini çarpar
+
+=3  
+
+
+
+DİV (DİVİDEYE BENZET) BÖLME İÇİN KULLANILIR
+
+
+
+
+
+!!!!!!! ÖNEMLİ !!!!!!!
+DOSYAYI KAYIT EDİLECEK NOKTAYA KOYMAK İÇİN LEA KULLANILIR
+ÖRNEK = 
+
+mov eax, 0x0000FF
+lea eax, [ebx+4]
+
+eaxı 0x0000ff dizini olarak kayıt ettik
+lea kullanarak eaxa ebx+4 verisini koyduk
+
+!!!!!!!! ÖNEMLİ !!!!!!!
+
+
+XOR SIFIRLAMA İÇİN KULLANILIR
+ÖRNEK =
+xor eax, eax ;eax'ı sıfırlar ilk haline
+
+
+NOP HİÇBİR SİKİMİ YAPMAZ NOPE MEEMİNİ HATIRLA AKLINA GELSİN
+
+
+
+RET PROSEDÜRDEN ÇIKAR VE ÇAĞIRAN YERE GERİ DÖNER RETURNDAN AKLINA GELSİN İŞİ BİTİNCE GERİ DONUYO EVİNE İSTE
+(ret loop içinde kullanılabilir bunu unutma mantığı benziyor)
+
+CALL ARAMA DİYEBİLİLİRİZ ÇAĞIRIYOR YANİ MESELA
+ÖRNEK = 
+call my_function ;my_function prosedürünü çağırır "gel hele kardes az isimiz var senle misali"
+
+
+POP VE PUSH İKİLİSİ 
+
+PUSH DEPOLAMAYA KAYIT EDER
+
+POP İSE İLK HALİNE GETİRİR 
+ÖRNEK=
+
+mov eax, 1
+push eax  ; bak burda itmisiz iceriye
+mov eax, 2    ;eax 3 oldu bak ama pushtan sonra yani ekleme yaptık
+mov ebx, 4  ;ebx e 4 değerini VERDİK
+add ebx, eax   ; ebxe eaxı ekledik baya cogaldılar suan matemetiğini kullan
+pop eax  ; EAXI İLK HALİNE DÖNDÜRDÜ YANİ İLK YAZDIĞIMIZ GİBİ SAF VE TEMİZ YANİ 1
+
+
+
+
+
+
+JNZ ÖRNEĞİ İYİ ANLA BAK İSİNE YARICAK
+
+cmp eax, 0   ;eax registerindeki değeri karşılaştırıyoruz 0 ile
+jnz not_zero  ; eaxa baktık eğer 0 ise devam ama 0 değilse not_zero etiketine git manasında
+;eax 0 ise kaldığı yerden devam
+
+
+not_zero
+
+    ; eax 0 olmasaydı buraya gelicekti kod burdan devam edicekti
+
+
+    end:
+    ;kodun kalanı
+
+
+
+
+
+Introduction
+
+Assembly language is a low-level programming language that provides direct control over the hardware. It is specific to a particular computer architecture, such as x86, ARM, or MIPS. This guide will focus on x86_64 architecture commonly used in Linux environments.
+Assembly Language Basics
+Registers
+
+Registers are small storage locations within the CPU that hold data temporarily. Common x86_64 registers include:
+
+    General Purpose Registers (GPRs): rax, rbx, rcx, rdx, rsi, rdi, rbp, rsp, r8-r15
+    Special Purpose Registers: rip (Instruction Pointer), rflags (Flags Register)
+    Segment Registers: cs, ds, es, fs, gs, ss
+
+Syntax
+
+Assembly language syntax varies by assembler. The most common assemblers are NASM (Netwide Assembler) and GAS (GNU Assembler). Here, we will focus on NASM syntax.
+Basic Instructions
+
+    Data Movement: mov, push, pop
+    Arithmetic: add, sub, mul, div, inc, dec
+    Logic: and, or, xor, not
+    Control Flow: jmp, je, jne, jg, jl, call, ret
+
+Writing and Compiling Assembly Programs
+Hello World Program
+
+A simple program to print "Hello, World!" in Linux using NASM:
+
+asm
+
+section .data
+    hello db 'Hello, World!', 0    ; Null-terminated string
+
+section .text
+    global _start
+
+_start:
+    ; sys_write(int fd, const void *buf, size_t count)
+    mov rax, 1                     ; syscall number for sys_write
+    mov rdi, 1                     ; file descriptor (stdout)
+    mov rsi, hello                 ; pointer to the string
+    mov rdx, 13                    ; length of the string
+    syscall
+
+    ; sys_exit(int status)
+    mov rax, 60                    ; syscall number for sys_exit
+    xor rdi, rdi                   ; status 0
+    syscall
+
+Compiling and Running
+
+    Assemble the program:
+
+    bash
+
+nasm -f elf64 hello.asm -o hello.o
+
+Link the object file:
+
+bash
+
+ld hello.o -o hello
+
+Run the executable:
+
+bash
+
+    ./hello
+
+Advanced Topics
+System Calls
+
+System calls are the interface between a user-space application and the kernel. In x86_64 Linux, syscalls are made by setting the appropriate values in registers and executing the syscall instruction.
+
+Example: Reading from a file
+
+asm
+
+section .data
+    buffer db 1024                  ; buffer to store read data
+
+section .bss
+
+section .text
+    global _start
+
+_start:
+    ; sys_open(const char *pathname, int flags)
+    mov rax, 2                     ; syscall number for sys_open
+    lea rdi, [rel filename]        ; pointer to filename
+    xor rsi, rsi                   ; flags (O_RDONLY)
+    syscall
+
+    ; sys_read(int fd, void *buf, size_t count)
+    mov rdi, rax                   ; file descriptor from sys_open
+    mov rax, 0                     ; syscall number for sys_read
+    lea rsi, [rel buffer]          ; buffer to read into
+    mov rdx, 1024                  ; number of bytes to read
+    syscall
+
+    ; sys_write(int fd, const void *buf, size_t count)
+    mov rdi, 1                     ; file descriptor (stdout)
+    mov rax, 1                     ; syscall number for sys_write
+    lea rsi, [rel buffer]          ; buffer to write from
+    syscall
+
+    ; sys_close(int fd)
+    mov rax, 3                     ; syscall number for sys_close
+    syscall
+
+    ; sys_exit(int status)
+    mov rax, 60                    ; syscall number for sys_exit
+    xor rdi, rdi                   ; status 0
+    syscall
+
+section .data
+    filename db 'example.txt', 0    ; filename to open
+
+Calling C Functions
+
+You can call C library functions from assembly by adhering to the calling convention. For x86_64, the calling convention is:
+
+    First six arguments are passed in rdi, rsi, rdx, rcx, r8, r9.
+    Additional arguments are pushed on the stack.
+    The return value is placed in rax.
+
+Example: Using printf from assembly
+
+asm
+
+section .data
+    fmt db 'Hello, %s!', 0
+    name db 'Assembly', 0
+
+section .text
+    extern printf
+    global _start
+
+_start:
+    ; Call printf("Hello, %s!", "Assembly")
+    lea rdi, [rel fmt]             ; format string
+    lea rsi, [rel name]            ; name string
+    call printf
+
+    ; sys_exit(int status)
+    mov rax, 60                    ; syscall number for sys_exit
+    xor rdi, rdi                   ; status 0
+    syscall
+
+Memory Management
+
+Managing memory manually is essential in low-level programming. This includes stack operations, heap allocation, and understanding memory layout.
+Stack Operations
+
+asm
+
+section .text
+    global _start
+
+_start:
+    ; Push and pop values on the stack
+    mov rax, 123
+    push rax                     ; push rax value onto the stack
+    pop rbx                      ; pop value from the stack into rbx
+
+Heap Allocation
+
+Heap memory is managed via system calls like brk and mmap. However, it's common to use the C library's malloc function.
+
+Example: Using malloc
+
+asm
+
+section .bss
+    buffer resb 128
+
+section .text
+    extern malloc, free
+    global _start
+
+_start:
+    ; Allocate memory
+    mov rdi, 128                 ; size
+    call malloc
+    mov rbx, rax                 ; store the allocated pointer
+
+    ; Use the allocated memory
+    ; (e.g., storing a string)
+
+    ; Free the allocated memory
+    mov rdi, rbx                 ; pointer to free
+    call free
+
+    ; sys_exit(int status)
+    mov rax, 60                  ; syscall number for sys_exit
+    xor rdi, rdi                 ; status 0
+    syscall
+
+Debugging Assembly Programs
+
+Debugging assembly programs can be challenging. Tools like gdb (GNU Debugger) are invaluable.
+Using GDB
+
+    Assemble and link with debugging symbols:
+
+    bash
+
+nasm -f elf64 -g -F dwarf hello.asm -o hello.o
+ld hello.o -o hello
+
+Start debugging:
+
+bash
+
+    gdb ./hello
+
+    Common GDB commands:
+        break _start: Set a breakpoint at _start
+        run: Start the program
+        step: Step through the program one instruction at a time
+        print $rax: Print the value of rax
+        x/10gx $rsp: Examine 10 values on the stack
+
+Advanced Tips and Tricks
+Inline Assembly in C
+
+You can write assembly code within C programs using GCC's inline assembly feature.
+
+Example:
+
+c
+
+#include <stdio.h>
+
+int main() {
+    int result;
+    asm ("movl $42, %0" : "=r"(result));
+    printf("Result: %d\n", result);
+    return 0;
+}
+
+Optimization Techniques
+
+    Loop Unrolling: Reduce loop overhead by manually expanding loops.
+    Instruction Scheduling: Reorder instructions to avoid pipeline stalls.
+    Using SIMD Instructions: Utilize SSE/AVX instructions for parallel processing.
+
+Conclusion
+
+This guide provides a comprehensive overview of assembly language programming for Linux on x86_64 architecture. Mastery of assembly language allows for fine-tuned control over hardware and deep understanding of how software interacts with the system at the lowest level.
