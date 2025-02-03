@@ -1,0 +1,1 @@
+print("Gayet başarılı")
