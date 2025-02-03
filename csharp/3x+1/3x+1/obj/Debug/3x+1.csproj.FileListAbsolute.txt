@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\3x+1\3x+1\bin\Debug\3x+1.exe.config
+C:\Users\hamza\source\repos\3x+1\3x+1\bin\Debug\3x+1.exe
+C:\Users\hamza\source\repos\3x+1\3x+1\bin\Debug\3x+1.pdb
+C:\Users\hamza\source\repos\3x+1\3x+1\obj\Debug\3x+1.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\3x+1\3x+1\obj\Debug\3x+1.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\3x+1\3x+1\obj\Debug\3x+1.exe
+C:\Users\hamza\source\repos\3x+1\3x+1\obj\Debug\3x+1.pdb

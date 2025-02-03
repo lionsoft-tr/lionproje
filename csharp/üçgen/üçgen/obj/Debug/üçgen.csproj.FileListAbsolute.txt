@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\üçgen\üçgen\obj\Debug\üçgen.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\üçgen\üçgen\obj\Debug\üçgen.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\üçgen\üçgen\bin\Debug\üçgen.exe.config
+C:\Users\hamza\source\repos\üçgen\üçgen\bin\Debug\üçgen.exe
+C:\Users\hamza\source\repos\üçgen\üçgen\bin\Debug\üçgen.pdb
+C:\Users\hamza\source\repos\üçgen\üçgen\obj\Debug\üçgen.exe
+C:\Users\hamza\source\repos\üçgen\üçgen\obj\Debug\üçgen.pdb

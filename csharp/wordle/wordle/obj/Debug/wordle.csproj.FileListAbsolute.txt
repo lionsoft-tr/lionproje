@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\wordle\wordle\bin\Debug\wordle.exe.config
+C:\Users\hamza\source\repos\wordle\wordle\bin\Debug\wordle.exe
+C:\Users\hamza\source\repos\wordle\wordle\bin\Debug\wordle.pdb
+C:\Users\hamza\source\repos\wordle\wordle\obj\Debug\wordle.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\wordle\wordle\obj\Debug\wordle.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\wordle\wordle\obj\Debug\wordle.exe
+C:\Users\hamza\source\repos\wordle\wordle\obj\Debug\wordle.pdb

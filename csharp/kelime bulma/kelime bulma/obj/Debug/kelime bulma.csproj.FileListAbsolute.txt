@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\bin\Debug\kelime bulma.exe.config
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\bin\Debug\kelime bulma.exe
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\bin\Debug\kelime bulma.pdb
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\obj\Debug\kelime bulma.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\obj\Debug\kelime bulma.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\obj\Debug\kelime bulma.exe
+C:\Users\hamza\source\repos\kelime bulma\kelime bulma\obj\Debug\kelime bulma.pdb

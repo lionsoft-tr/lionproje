@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\bin\Debug\cybersecurity.exe.config
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\bin\Debug\cybersecurity.exe
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\bin\Debug\cybersecurity.pdb
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\obj\Debug\cybersecurity.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\obj\Debug\cybersecurity.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\obj\Debug\cybersecurity.exe
+C:\Users\hamza\source\repos\cybersecurity\cybersecurity\obj\Debug\cybersecurity.pdb

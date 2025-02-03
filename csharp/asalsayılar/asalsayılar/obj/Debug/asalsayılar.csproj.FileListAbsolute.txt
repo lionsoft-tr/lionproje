@@ -1,0 +1,7 @@
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\bin\Debug\asalsayılar.exe.config
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\bin\Debug\asalsayılar.exe
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\bin\Debug\asalsayılar.pdb
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\obj\Debug\asalsayılar.csproj.AssemblyReference.cache
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\obj\Debug\asalsayılar.csproj.CoreCompileInputs.cache
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\obj\Debug\asalsayılar.exe
+C:\Users\hamza\source\repos\asalsayılar\asalsayılar\obj\Debug\asalsayılar.pdb
